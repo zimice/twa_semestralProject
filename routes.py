@@ -1,9 +1,8 @@
-from flask import render_template, redirect, url_for, flash, request
-from flask_login import login_user, current_user, logout_user, login_required
-from werkzeug.security import generate_password_hash, check_password_hash
-
-from app import app  # Import the Flask app object
-import models, forms
+from flask import render_template, flash, redirect, url_for
+from flask_login import current_user, login_user, logout_user, login_required
+from app import app, db
+from models import Equipment, User
+from forms import LoginForm, RegistrationForm, EquipmentForm
 
 @app.route('/')
 # ...
