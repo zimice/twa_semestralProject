@@ -26,13 +26,13 @@ app.get("/equipment", (req, res) => {
 
 // POST method route
 app.post("/equipment", (req, res) => {
-    const {name, description, quantity} = req.body;
-    db.run(`INSERT INTO equipment (name, description, quantity) VALUES(?, ?, ?)`, [name, description, quantity], function(err) {
+    const {name, description} = req.body;
+    db.run(`INSERT INTO equipment (name, description) VALUES(?, ?)`, [name, description], function(err) {
       if (err) {
         return console.log(err.message);
       }
       // get the last insert id
-      console.log(`A row has been inserted with rowid ${this.lastID}`);
+   //   console.log(`A row has been inserted with rowid ${this.lastID}`);
     });
     res.status(201).send('Equipment added');
   });

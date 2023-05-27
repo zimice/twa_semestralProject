@@ -1,0 +1,10 @@
+INSERT INTO Equipment (name, description) VALUES ('Defibrillator', 'Device used to restore a normal heartbeat by sending an electric pulse or shock to the heart.');
+INSERT INTO Equipment (name, description) VALUES ('Ventilator', 'Machine that helps patients breathe by giving oxygen through a tube.');
+INSERT INTO Equipment (name, description) VALUES ('ECG Machine', 'Device to record the electrical activity of the heart over a period of time.');
+INSERT INTO Equipment (name, description) VALUES ('Surgical Scalpel', 'Small and extremely sharp bladed instrument used for surgery or anatomical dissection.');
+INSERT INTO Equipment (name, description) VALUES ('Stethoscope', 'Acoustic medical device for auscultation, or listening to internal sounds of a human body.');
+INSERT INTO Equipment (name, description) VALUES ('Syringe', 'Simple reciprocating pump consisting of a plunger that fits tightly within a cylindrical tube.');
+INSERT INTO Equipment (name, description) VALUES ('Medical Ultrasound', 'Diagnostic imaging technique based on the application of ultrasound.');
+INSERT INTO Equipment (name, description) VALUES ('Blood Pressure Monitor', 'Device used to measure blood pressure, composed of an inflatable cuff to restrict blood flow.');
+INSERT INTO Equipment (name, description) VALUES ('IV Stand', 'Stand designed to hold Intravenous fluids or other equipment.');
+INSERT INTO Equipment (name, description) VALUES ('Thermometer', 'Device that measures temperature or a temperature gradient.');

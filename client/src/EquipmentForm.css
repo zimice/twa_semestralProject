@@ -1,0 +1,26 @@
+.equipment-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.equipment-form input {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.equipment-form button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #008CBA;
+    color: white;
+    cursor: pointer;
+}
+
+.equipment-form button:hover {
+    background-color: #007B9A;
+}
