@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '.././EquipmentForm.css';
+import './EquipmentForm.css';
 
 const EquipmentForm = ({ onSubmit }) => {
     const [name, setName] = useState("");

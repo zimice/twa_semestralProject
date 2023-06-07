@@ -12,6 +12,7 @@ let db = new sqlite3.Database('./hospitalER.db', (err) => {
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+app.use(express.json());
 
 app.get("/equipment", (req, res) => {
     const sql = "SELECT * FROM equipment";
