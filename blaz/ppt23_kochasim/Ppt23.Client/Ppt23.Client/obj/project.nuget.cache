@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "v/hmK66407bj3hsJMTFljFdGdCg6HH1hODAZl/Fe/mpdUVo8rI93TLhA9ewfPTj/g6TdI/y3JevHYoEdtMFQCg==",
+  "dgSpecHash": "5gZMETz1sa6XGbkWgCncHig3TYk3qgrHuYwUj86acZtUzvTg6jJcMvD4RrgMiyjfD8XW7KKTJZ57flOKB6NN6Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\simon\\Downloads\\ppt23_kochasim\\Ppt23.Client\\Ppt23.Client\\Ppt23.Client.csproj",
+  "projectFilePath": "C:\\Users\\simon\\Downloads\\twa_semestralProject\\blaz\\ppt23_kochasim\\Ppt23.Client\\Ppt23.Client\\Ppt23.Client.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\simon\\.nuget\\packages\\microsoft.aspnetcore.authorization\\7.0.3\\microsoft.aspnetcore.authorization.7.0.3.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\microsoft.aspnetcore.components\\7.0.3\\microsoft.aspnetcore.components.7.0.3.nupkg.sha512",
@@ -31,7 +31,7 @@
     "C:\\Users\\simon\\.nuget\\packages\\system.io.pipelines\\7.0.0\\system.io.pipelines.7.0.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
-    "C:\\Users\\simon\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\7.0.4\\microsoft.netcore.app.runtime.mono.browser-wasm.7.0.4.nupkg.sha512"
+    "C:\\Users\\simon\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\7.0.3\\microsoft.netcore.app.runtime.mono.browser-wasm.7.0.3.nupkg.sha512"
   ],
   "logs": []
 }

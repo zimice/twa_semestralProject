@@ -33,3 +33,6 @@ C:\Users\Simon\Downloads\ppt23_kochasim\Ppt.Api\obj\Debug\net7.0\Ppt.Api.genrunt
 C:\Users\Simon\Downloads\ppt23_kochasim\Ppt.Api\obj\Debug\net7.0\ref\Ppt.Api.dll
 C:\Users\Simon\Downloads\ppt23_kochasim\Ppt.Api\bin\Debug\net7.0\Ppt.Shared.dll
 C:\Users\Simon\Downloads\ppt23_kochasim\Ppt.Api\bin\Debug\net7.0\Ppt.Shared.pdb
+C:\Users\simon\Downloads\twa_semestralProject\blaz\ppt23_kochasim\Ppt.Api\obj\Debug\net7.0\Ppt.Api.dll
+C:\Users\simon\Downloads\twa_semestralProject\blaz\ppt23_kochasim\Ppt.Api\obj\Debug\net7.0\refint\Ppt.Api.dll
+C:\Users\simon\Downloads\twa_semestralProject\blaz\ppt23_kochasim\Ppt.Api\obj\Debug\net7.0\Ppt.Api.pdb
