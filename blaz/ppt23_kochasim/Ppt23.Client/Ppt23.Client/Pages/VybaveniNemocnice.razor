@@ -37,20 +37,13 @@
         equipment.LastRevisionDateTime = DateTime.Now;
         equipment.isRevisionNeeded = !equipment.isRevisionNeeded;
 
-        HttpResponseMessage response = await Http.PostAsJsonAsync("/vybaveni", equipment);
+        await UpdateEquipment(equipment);
 
-        if (response.IsSuccessStatusCode)
-        {
-            Console.WriteLine("Revision performed successfully.");
-        }
-        else
-        {
-            Console.WriteLine("Failed to perform revision. Please refresh the page.");
-        }
+        
     }
     private async Task UpdateEquipment(VybaveniVm updatedEquipment)
     {
-        HttpResponseMessage response = await Http.PutAsJsonAsync($"hospital-equipment/{updatedEquipment.Id}", updatedEquipment);
+        HttpResponseMessage response = await Http.PutAsJsonAsync($"vybaveni/{updatedEquipment.Id}", updatedEquipment);
 
         if (response.IsSuccessStatusCode)
         {

@@ -1,4 +1,4 @@
-﻿using Ppt.Shared;
+﻿using Ppt.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +24,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+using var context = new HospitalContext();
+
+var equipments = context.HospitalEquipment.ToList();
+
+foreach (var equipment in equipments)
+{
+    Console.WriteLine($"Name: {equipment.Name}");
+}
 
 List<VybaveniVm> seznam = VybaveniVm.VratRandSeznam();
 
@@ -39,7 +47,7 @@ app.MapGet("/vybaveni/specific", ()=>{
 
 app.MapPost("/vybaveni", (VybaveniVm prichoziModel) =>
 {
-    Guid id = Guid.NewGuid();
+    int id = new Random().Next(1,300000);
     prichoziModel.Id = id;
     seznam.Insert(0, prichoziModel);
     return id;

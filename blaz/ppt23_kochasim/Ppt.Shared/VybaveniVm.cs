@@ -9,9 +9,9 @@
 
         public bool isEditable { get; set; }
 
-        public int price { get; set; }
+        public int Price { get; set; }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public DateTime BoughtDateTime { get; set; }
 
         public DateTime LastRevisionDateTime { get; set; }
@@ -21,7 +21,7 @@
             this.isRevisionNeeded = isRevisionNeeded;  
             this.BoughtDateTime = BoughtDateTime;
             this.LastRevisionDateTime = LastRevisionDateTime;
-            this.Id = Guid.NewGuid();
+            this.Id = rnd.Next(1, 258000);
         }
 
         public static List<VybaveniVm> VratRandSeznam()

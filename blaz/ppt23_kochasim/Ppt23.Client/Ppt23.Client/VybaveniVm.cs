@@ -11,7 +11,7 @@
 
         public int price { get; set; }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public DateTime BoughtDateTime { get; set; }
 
         public DateTime LastRevisionDateTime { get; set; }

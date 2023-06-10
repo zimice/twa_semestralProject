@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\simon\\Downloads\\twa_semestralProject\\blaz\\ppt23_kochasim\\Ppt.Api\\Ppt.Api.csproj": {}
+    "C:\\Users\\simon\\Downloads\\twa_semestralproject\\blaz\\ppt23_kochasim\\Ppt.Api\\Ppt.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\simon\\Downloads\\twa_semestralProject\\blaz\\ppt23_kochasim\\Ppt.Api\\Ppt.Api.csproj": {
+    "C:\\Users\\simon\\Downloads\\twa_semestralproject\\blaz\\ppt23_kochasim\\Ppt.Api\\Ppt.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\simon\\Downloads\\twa_semestralProject\\blaz\\ppt23_kochasim\\Ppt.Api\\Ppt.Api.csproj",
+        "projectUniqueName": "C:\\Users\\simon\\Downloads\\twa_semestralproject\\blaz\\ppt23_kochasim\\Ppt.Api\\Ppt.Api.csproj",
         "projectName": "Ppt.Api",
-        "projectPath": "C:\\Users\\simon\\Downloads\\twa_semestralProject\\blaz\\ppt23_kochasim\\Ppt.Api\\Ppt.Api.csproj",
+        "projectPath": "C:\\Users\\simon\\Downloads\\twa_semestralproject\\blaz\\ppt23_kochasim\\Ppt.Api\\Ppt.Api.csproj",
         "packagesPath": "C:\\Users\\simon\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\simon\\Downloads\\twa_semestralProject\\blaz\\ppt23_kochasim\\Ppt.Api\\obj\\",
+        "outputPath": "C:\\Users\\simon\\Downloads\\twa_semestralproject\\blaz\\ppt23_kochasim\\Ppt.Api\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\simon\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -32,8 +28,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\simon\\Downloads\\twa_semestralProject\\blaz\\ppt23_kochasim\\Ppt.Shared\\Ppt.Shared.csproj": {
-                "projectPath": "C:\\Users\\simon\\Downloads\\twa_semestralProject\\blaz\\ppt23_kochasim\\Ppt.Shared\\Ppt.Shared.csproj"
+              "C:\\Users\\simon\\Downloads\\twa_semestralproject\\blaz\\ppt23_kochasim\\Ppt.Shared\\Ppt.Shared.csproj": {
+                "projectPath": "C:\\Users\\simon\\Downloads\\twa_semestralproject\\blaz\\ppt23_kochasim\\Ppt.Shared\\Ppt.Shared.csproj"
               }
             }
           }
@@ -51,6 +47,14 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[7.0.5, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -76,7 +80,62 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\simon\\Downloads\\twa_semestralproject\\blaz\\ppt23_kochasim\\Ppt.Shared\\Ppt.Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\simon\\Downloads\\twa_semestralproject\\blaz\\ppt23_kochasim\\Ppt.Shared\\Ppt.Shared.csproj",
+        "projectName": "Ppt.Shared",
+        "projectPath": "C:\\Users\\simon\\Downloads\\twa_semestralproject\\blaz\\ppt23_kochasim\\Ppt.Shared\\Ppt.Shared.csproj",
+        "packagesPath": "C:\\Users\\simon\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\simon\\Downloads\\twa_semestralproject\\blaz\\ppt23_kochasim\\Ppt.Shared\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\simon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
