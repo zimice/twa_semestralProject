@@ -1,5 +1,6 @@
 ﻿@page "/vybaveni"
 @using Ppt23.Client.Components
+@using Ppt.Shared
 @inject HttpClient Http
 
 <h1 class="text-3xl font-bold mb-4">Vybaveni Nemocnice</h1>
@@ -20,7 +21,7 @@
         
         
         <div class="col-span-5">
-            <VybaveRow Vyb="@equipment" OnDelete="() => listEquipment.Remove(equipment)" OnPerformRevision="() => performRevision(equipment)" />
+            <VybaveRow Vyb="@equipment" OnDelete="() => DeleteEquipment(equipment)" OnPerformRevision="() => performRevision(equipment)" />
         </div>
     }
 
@@ -30,13 +31,50 @@
 
     List<Ppt.Shared.VybaveniVm>? listEquipment = new List<Ppt.Shared.VybaveniVm>();
 
-    private void performRevision(Ppt.Shared.VybaveniVm equipment)
+    private async Task performRevision(VybaveniVm equipment)
 
     {
-        equipment.LastRevisionDateTime = DateTime.Today;
+        equipment.LastRevisionDateTime = DateTime.Now;
         equipment.isRevisionNeeded = !equipment.isRevisionNeeded;
-    }
 
+        HttpResponseMessage response = await Http.PostAsJsonAsync("/vybaveni", equipment);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Revision performed successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Failed to perform revision. Please refresh the page.");
+        }
+    }
+    private async Task UpdateEquipment(VybaveniVm updatedEquipment)
+    {
+        HttpResponseMessage response = await Http.PutAsJsonAsync($"hospital-equipment/{updatedEquipment.Id}", updatedEquipment);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Item updated successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Failed to update item. Please refresh the page.");
+        }
+    }
+    private async Task DeleteEquipment(VybaveniVm equipment)
+    {
+        HttpResponseMessage response = await Http.DeleteAsync($"vybaveni/{equipment.Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            listEquipment.Remove(equipment);
+            Console.WriteLine("Item deleted successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Failed to delete item. Please refresh the page.");
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {

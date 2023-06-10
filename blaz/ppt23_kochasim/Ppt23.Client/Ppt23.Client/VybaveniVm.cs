@@ -8,6 +8,10 @@
         public bool isRevisionNeeded { get; set; }
 
         public bool isEditable { get; set; }
+
+        public int price { get; set; }
+
+        public Guid Id { get; set; }
         public DateTime BoughtDateTime { get; set; }
 
         public DateTime LastRevisionDateTime { get; set; }
@@ -17,6 +21,7 @@
             this.isRevisionNeeded = isRevisionNeeded;  
             this.BoughtDateTime = BoughtDateTime;
             this.LastRevisionDateTime = LastRevisionDateTime;
+            this.Id = Guid.NewGuid();
         }
 
         public static List<VybaveniVm> VratRandSeznam()
