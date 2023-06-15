@@ -7,3 +7,10 @@ CREATE TABLE HospitalEquipment (
     BoughtDateTime TEXT,
     LastRevisionDateTime TEXT
 );
+
+CREATE TABLE Users (
+    UserID INTEGER PRIMARY KEY,
+    Username TEXT NOT NULL,
+    Password TEXT NOT NULL,
+    CreatedAt TEXT DEFAULT CURRENT_TIMESTAMP
+);

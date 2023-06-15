@@ -30,13 +30,19 @@ else
             @((Vyb.isRevisionNeeded) ? "Yes" : "No")
         </div>
         <div class="flex justify-center">
-            <button @onclick="() => Vyb.isEditable= false" class="bg-amber-500 twbtn">Ok</button>
+            <button @onclick="() => saveChanges(Vyb)" class="bg-amber-500 twbtn">Ok</button>
             </div>
     </div>
 }
 @code {
+    void saveChanges(VybaveniVm Equi)
+    {
+        OnSaveChanges.InvokeAsync(Equi);
+        Equi.isEditable = false;
+    }
 
     [Parameter] public VybaveniVm Vyb { get; set; }
     [Parameter] public EventCallback<VybaveniVm> OnDelete { get; set; }
     [Parameter] public EventCallback<VybaveniVm> OnPerformRevision { get; set; }
+    [Parameter] public EventCallback<VybaveniVm> OnSaveChanges { get; set; }
 }

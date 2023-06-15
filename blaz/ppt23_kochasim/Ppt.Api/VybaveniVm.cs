@@ -21,7 +21,7 @@
             this.isRevisionNeeded = isRevisionNeeded;  
             this.BoughtDateTime = BoughtDateTime;
             this.LastRevisionDateTime = LastRevisionDateTime;
-            this.Id = Guid.NewGuid();
+            this.Id = Random.Shared.Next(1, 200000);
         }
 
         public static List<VybaveniVm> VratRandSeznam()

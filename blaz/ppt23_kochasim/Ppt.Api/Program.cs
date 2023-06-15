@@ -33,7 +33,9 @@ foreach (var equipment in equipments)
     Console.WriteLine($"Name: {equipment.Name}");
 }
 
-List<VybaveniVm> seznam = VybaveniVm.VratRandSeznam();
+List<VybaveniVm> seznam; 
+//seznam = VybaveniVm.VratRandSeznam();
+seznam = equipments;
 
 app.MapGet("/vybaveni", () =>
 {
@@ -57,7 +59,7 @@ app.MapPost("/vybaveni", (VybaveniVm prichoziModel) =>
 app.UseHttpsRedirection();
 
 
-app.MapDelete("/vybaveni/{Id}", (Guid Id) =>
+app.MapDelete("/vybaveni/{Id}", (int Id) =>
 {
     var item = seznam.SingleOrDefault(x => x.Id == Id);
     if (item == null)

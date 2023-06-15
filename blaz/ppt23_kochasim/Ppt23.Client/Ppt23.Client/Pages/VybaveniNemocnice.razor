@@ -21,7 +21,7 @@
         
         
         <div class="col-span-5">
-            <VybaveRow Vyb="@equipment" OnDelete="() => DeleteEquipment(equipment)" OnPerformRevision="() => performRevision(equipment)" />
+            <VybaveRow Vyb="@equipment" OnDelete="() => DeleteEquipment(equipment)" OnPerformRevision="() => performRevision(equipment)" OnSaveChanges ="() => saveChanges(equipment)" />
         </div>
     }
 
@@ -30,6 +30,11 @@
 @code {
 
     List<Ppt.Shared.VybaveniVm>? listEquipment = new List<Ppt.Shared.VybaveniVm>();
+
+    private async Task saveChanges(VybaveniVm equipment)
+    {
+        await UpdateEquipment(equipment);
+    }
 
     private async Task performRevision(VybaveniVm equipment)
 
