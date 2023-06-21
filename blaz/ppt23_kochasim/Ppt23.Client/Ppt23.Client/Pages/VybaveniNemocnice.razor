@@ -7,7 +7,8 @@
 
 <div class="container mx-auto bg-neutral-200 p-4 px-4 py-4">
     <div class="text-lg font-semibold mb-2">Number of Equipment: @listEquipment?.Count</div>
-    <button class="bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded mb-3" @onclick="OnInitializedAsync">New List</button>
+    <button class="bg-emerald-500 hover:bg-emerald-300 text-white font-bold py-2 px-4 rounded mb-3" @onclick="()=> {newVybav = VybaveniVm.VratRandSeznam(1).First();isInNewMode = true;}"> New Item</button>
+
     <div class=" bg-green-200 grid grid-cols-5 gap-2 py-1 px-2">
         <div class="font-bold text-sm ml-2">Name</div>
         <div class="font-bold text-sm text-center">Bought Date</div>
@@ -15,6 +16,17 @@
         <div class="font-bold text-sm text-center">Revision Needed</div>
         <div></div>
     </div>
+
+    
+    @if (isInNewMode)
+    {
+        ArgumentNullException.ThrowIfNull(newVybav);
+
+        <VybaveRow IsInEditMode=true Equi="newModel" EditDoneEventCallback="() => CreateEquipment(newModel)">
+            <button type="submit" class="btn bg-teal-500">Add</button>
+            <button type="button" @onclick="() => isInNewMode = false" class="btn bg-teal-700 ml-2">Cancel</button>
+        </VybaveRow>
+    }
 
     @foreach (var equipment in listEquipment)
     {
@@ -28,8 +40,31 @@
 </div>
 
 @code {
-
+    bool isInNewMode;
+    VybaveniVm newVybav;
     List<Ppt.Shared.VybaveniVm>? listEquipment = new List<Ppt.Shared.VybaveniVm>();
+
+    private async Task CreateEquipment(VybaveniVm newEquipment)
+    {
+        HttpResponseMessage response = await Http.PostAsJsonAsync($"vybaveni", newEquipment);
+
+        if (response.IsSuccessStatusCode)
+        {
+            VybaveniVm createdEquipment = await response.Content.ReadFromJsonAsync<VybaveniVm>();
+            if (createdEquipment != null)
+            {
+                newEquipment.Id = createdEquipment.Id;
+                listEquipment.Insert(0, newEquipment);
+                isInNewMode = false;
+                Console.WriteLine("Item created successfully.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Failed to create item. Please refresh the page.");
+        }
+    }
+
 
     private async Task saveChanges(VybaveniVm equipment)
     {

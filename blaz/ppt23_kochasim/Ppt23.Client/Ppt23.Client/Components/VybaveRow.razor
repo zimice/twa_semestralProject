@@ -37,11 +37,24 @@ else
 @code {
     void saveChanges(VybaveniVm Equi)
     {
-        OnSaveChanges.InvokeAsync(Equi);
         Equi.isEditable = false;
+        OnSaveChanges.InvokeAsync(Equi);
+
+    }
+
+    void EnableEditMode()
+    {
+        IsInEditMode = true;
+        equipment = new VybaveniVm(Vyb.Name, IsInEditMode, Vyb.BoughtDateTime, Vyb.LastRevisionDateTime)
+            {
+
+                price = Vyb.price
+            };
     }
 
     [Parameter] public VybaveniVm Vyb { get; set; }
+    VybaveniVm? equipment;
+    [Parameter] public bool IsInEditMode { get; set; }
     [Parameter] public EventCallback<VybaveniVm> OnDelete { get; set; }
     [Parameter] public EventCallback<VybaveniVm> OnPerformRevision { get; set; }
     [Parameter] public EventCallback<VybaveniVm> OnSaveChanges { get; set; }

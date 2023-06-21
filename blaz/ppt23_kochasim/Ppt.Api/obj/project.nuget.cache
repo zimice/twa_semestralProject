@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GvTSitT1irSXUMpL2B0ANvBAn129FpVIZhqd/Uf3kbCmmRMehMz8x8eErGsfIH303a0ubMouEEHmTv4Az0FoAw==",
+  "dgSpecHash": "0moVdXQ/+W/qf/tJCKIgaAXUqnDERKRhkExHP9sX+HQKFCvKjJnjMT+w5izyP91P8XTqQBxgp4T6EstdTKUHlQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\simon\\Downloads\\twa_semestralproject\\blaz\\ppt23_kochasim\\Ppt.Api\\Ppt.Api.csproj",
+  "projectFilePath": "C:\\Users\\simon\\Downloads\\twa_semestralProject\\blaz\\ppt23_kochasim\\Ppt.Api\\Ppt.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\simon\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.4\\microsoft.aspnetcore.openapi.7.0.4.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\microsoft.data.sqlite.core\\7.0.5\\microsoft.data.sqlite.core.7.0.5.nupkg.sha512",
