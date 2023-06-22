@@ -1,0 +1,86 @@
+﻿@page "/login"
+@using Ppt23.Client.Components
+@using Ppt.Shared
+@inject HttpClient Http
+@inject SharedStateService StateService
+
+<h1 class="text-3xl font-bold mb-4">Login</h1>
+
+
+
+@code {
+    bool isInNewMode;
+    VybaveniVm newVybav;
+    List<Ppt.Shared.VybaveniVm>? listEquipment = new List<Ppt.Shared.VybaveniVm>();
+
+    private async Task CreateEquipment(VybaveniVm newEquipment)
+    {
+        HttpResponseMessage response = await Http.PostAsJsonAsync($"vybaveni", newEquipment);
+
+        if (response.IsSuccessStatusCode)
+        {
+            VybaveniVm createdEquipment = await response.Content.ReadFromJsonAsync<VybaveniVm>();
+            if (createdEquipment != null)
+            {
+                newEquipment.Id = createdEquipment.Id;
+                listEquipment.Insert(0, newEquipment);
+                isInNewMode = false;
+                Console.WriteLine("Item created successfully.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Failed to create item. Please refresh the page.");
+        }
+    }
+
+
+    private async Task saveChanges(VybaveniVm equipment)
+    {
+        await UpdateEquipment(equipment);
+    }
+
+    private async Task performRevision(VybaveniVm equipment)
+
+    {
+        equipment.LastRevisionDateTime = DateTime.Now;
+        equipment.isRevisionNeeded = !equipment.isRevisionNeeded;
+
+        await UpdateEquipment(equipment);
+
+
+    }
+    private async Task UpdateEquipment(VybaveniVm updatedEquipment)
+    {
+        HttpResponseMessage response = await Http.PutAsJsonAsync($"vybaveni/{updatedEquipment.Id}", updatedEquipment);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Item updated successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Failed to update item. Please refresh the page.");
+        }
+    }
+    private async Task DeleteEquipment(VybaveniVm equipment)
+    {
+        HttpResponseMessage response = await Http.DeleteAsync($"vybaveni/{equipment.Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            listEquipment.Remove(equipment);
+            Console.WriteLine("Item deleted successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Failed to delete item. Please refresh the page.");
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        listEquipment = await Http.GetFromJsonAsync<List<Ppt.Shared.VybaveniVm>>("vybaveni");
+    }
+
+}

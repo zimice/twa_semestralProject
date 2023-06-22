@@ -24,28 +24,32 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-using var context = new HospitalContext();
+using var hospitalContext = new HospitalContext();
+var equipments = hospitalContext.HospitalEquipment.ToList();
 
-var equipments = context.HospitalEquipment.ToList();
-
-foreach (var equipment in equipments)
-{
-    Console.WriteLine($"Name: {equipment.Name}");
-}
+using var loginContext = new LoginContext();
+var users = loginContext.Users.ToList();
 
 List<VybaveniVm> seznam; 
 //seznam = VybaveniVm.VratRandSeznam();
 seznam = equipments;
 
+List<User> userList = users;
+
+app.MapPost("/login", (User incomingUser) =>
+{
+    bool isCorrect = userList.Contains(incomingUser);
+    if (isCorrect == false)
+        return Results.NotFound("Tato položka nebyla nalezena!!");
+    return Results.Ok();
+
+});
+
 app.MapGet("/vybaveni", () =>
 {
     return seznam;
 });
-app.MapGet("/vybaveni/specific", ()=>{
-    
-    return seznam[2]; 
 
-});
 
 app.MapPost("/vybaveni", (VybaveniVm prichoziModel) =>
 {
