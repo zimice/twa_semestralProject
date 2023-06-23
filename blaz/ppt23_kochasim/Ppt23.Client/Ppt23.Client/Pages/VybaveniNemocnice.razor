@@ -7,112 +7,114 @@
 <h1 class="text-3xl font-bold mb-4">Vybaveni Nemocnice</h1>
 
 <div class="container mx-auto bg-neutral-200 p-4 px-4 py-4">
-    <div class="text-lg font-semibold mb-2">Number of Equipment: @listEquipment?.Count</div>
-    <button class="bg-emerald-500 hover:bg-emerald-300 text-white font-bold py-2 px-4 rounded mb-3" @onclick="()=> {newVybav = VybaveniVm.VratRandSeznam(1).First();isInNewMode = true;}"> New Item</button>
+	<div class="text-lg font-semibold mb-2">Number of Equipment: @listEquipment?.Count</div>
+	<button class="bg-emerald-500 hover:bg-emerald-300 text-white font-bold py-2 px-4 rounded mb-3" @onclick="()=> {newVybav = VybaveniVm.VratRandSeznam(1).First();isInNewMode = true;}"> New Item</button>
 
-    <div class=" bg-green-200 grid grid-cols-5 gap-2 py-1 px-2">
-        <div class="font-bold text-sm ml-2">Name</div>
-        <div class="font-bold text-sm text-center">Bought Date</div>
-        <div class="font-bold text-sm text-center">Last Revision Date</div>
-        <div class="font-bold text-sm text-center">Revision Needed</div>
-        <div></div>
-    </div>
+	<div class=" bg-green-200 grid grid-cols-5 gap-2 py-1 px-2">
+		<div class="font-bold text-sm ml-2">Name</div>
+		<div class="font-bold text-sm text-center">Bought Date</div>
+		<div class="font-bold text-sm text-center">Last Revision Date</div>
+		<div class="font-bold text-sm text-center">Revision Needed</div>
+		<div></div>
+	</div>
 
-    
-    @if (isInNewMode)
-    {
-        ArgumentNullException.ThrowIfNull(newVybav);
 
-        <VybaveRow IsInEditMode=true Equi="newModel" EditDoneEventCallback="() => CreateEquipment(newModel)">
-            <button type="submit" class="btn bg-teal-500">Add</button>
-            <button type="button" @onclick="() => isInNewMode = false" class="btn bg-teal-700 ml-2">Cancel</button>
-        </VybaveRow>
-    }
+	@if (isInNewMode)
+	{
+		ArgumentNullException.ThrowIfNull(newVybav);
 
-    @foreach (var equipment in listEquipment)
-    {
-        
-        
-        <div class="col-span-5">
-            <VybaveRow Vyb="@equipment" OnDelete="() => DeleteEquipment(equipment)" OnPerformRevision="() => performRevision(equipment)" OnSaveChanges ="() => saveChanges(equipment)" />
-        </div>
-    }
+		<VybaveRow IsInEditMode=true Equi="newModel" EditDoneEventCallback="() => CreateEquipment(newModel)">
+			<button type="submit" class="btn bg-teal-500">Add</button>
+			<button type="button" @onclick="() => isInNewMode = false" class="btn bg-teal-700 ml-2">Cancel</button>
+		</VybaveRow>
+	}
+
+	@foreach (var equipment in listEquipment)
+	{
+
+
+		<div class="col-span-5">
+			<VybaveRow Vyb="@equipment" OnDelete="() => DeleteEquipment(equipment)" OnPerformRevision="() => performRevision(equipment)" OnSaveChanges="() => saveChanges(equipment)" IsUserLoggedIn="@StateService.SharedVariable" />
+		</div>
+	}
 
 </div>
 
 @code {
-    bool isInNewMode;
-    VybaveniVm newVybav;
-    List<Ppt.Shared.VybaveniVm>? listEquipment = new List<Ppt.Shared.VybaveniVm>();
-
-    private async Task CreateEquipment(VybaveniVm newEquipment)
-    {
-        HttpResponseMessage response = await Http.PostAsJsonAsync($"vybaveni", newEquipment);
-
-        if (response.IsSuccessStatusCode)
-        {
-            VybaveniVm createdEquipment = await response.Content.ReadFromJsonAsync<VybaveniVm>();
-            if (createdEquipment != null)
-            {
-                newEquipment.Id = createdEquipment.Id;
-                listEquipment.Insert(0, newEquipment);
-                isInNewMode = false;
-                Console.WriteLine("Item created successfully.");
-            }
-        }
-        else
-        {
-            Console.WriteLine("Failed to create item. Please refresh the page.");
-        }
-    }
+	bool isInNewMode;
+	VybaveniVm newVybav;
+	List<Ppt.Shared.VybaveniVm>? listEquipment = new List<Ppt.Shared.VybaveniVm>();
 
 
-    private async Task saveChanges(VybaveniVm equipment)
-    {
-        await UpdateEquipment(equipment);
-    }
 
-    private async Task performRevision(VybaveniVm equipment)
+	private async Task CreateEquipment(VybaveniVm newEquipment)
+	{
+		HttpResponseMessage response = await Http.PostAsJsonAsync($"vybaveni", newEquipment);
 
-    {
-        equipment.LastRevisionDateTime = DateTime.Now;
-        equipment.isRevisionNeeded = !equipment.isRevisionNeeded;
+		if (response.IsSuccessStatusCode)
+		{
+			VybaveniVm createdEquipment = await response.Content.ReadFromJsonAsync<VybaveniVm>();
+			if (createdEquipment != null)
+			{
+				newEquipment.Id = createdEquipment.Id;
+				listEquipment.Insert(0, newEquipment);
+				isInNewMode = false;
+				Console.WriteLine("Item created successfully.");
+			}
+		}
+		else
+		{
+			Console.WriteLine("Failed to create item. Please refresh the page.");
+		}
+	}
 
-        await UpdateEquipment(equipment);
 
-        
-    }
-    private async Task UpdateEquipment(VybaveniVm updatedEquipment)
-    {
-        HttpResponseMessage response = await Http.PutAsJsonAsync($"vybaveni/{updatedEquipment.Id}", updatedEquipment);
+	private async Task saveChanges(VybaveniVm equipment)
+	{
+		await UpdateEquipment(equipment);
+	}
 
-        if (response.IsSuccessStatusCode)
-        {
-            Console.WriteLine("Item updated successfully.");
-        }
-        else
-        {
-            Console.WriteLine("Failed to update item. Please refresh the page.");
-        }
-    }
-    private async Task DeleteEquipment(VybaveniVm equipment)
-    {
-        HttpResponseMessage response = await Http.DeleteAsync($"vybaveni/{equipment.Id}");
+	private async Task performRevision(VybaveniVm equipment)
 
-        if (response.IsSuccessStatusCode)
-        {
-            listEquipment.Remove(equipment);
-            Console.WriteLine("Item deleted successfully.");
-        }
-        else
-        {
-            Console.WriteLine("Failed to delete item. Please refresh the page.");
-        }
-    }
+	{
+		equipment.LastRevisionDateTime = DateTime.Now;
+		equipment.isRevisionNeeded = !equipment.isRevisionNeeded;
 
-    protected override async Task OnInitializedAsync()
-    {
-        listEquipment = await Http.GetFromJsonAsync<List<Ppt.Shared.VybaveniVm>>("vybaveni");
-    }
+		await UpdateEquipment(equipment);
+
+
+	}
+	private async Task UpdateEquipment(VybaveniVm updatedEquipment)
+	{
+		HttpResponseMessage response = await Http.PutAsJsonAsync($"vybaveni/{updatedEquipment.Id}", updatedEquipment);
+
+		if (response.IsSuccessStatusCode)
+		{
+			Console.WriteLine("Item updated successfully.");
+		}
+		else
+		{
+			Console.WriteLine("Failed to update item. Please refresh the page.");
+		}
+	}
+	private async Task DeleteEquipment(VybaveniVm equipment)
+	{
+		HttpResponseMessage response = await Http.DeleteAsync($"vybaveni/{equipment.Id}");
+
+		if (response.IsSuccessStatusCode)
+		{
+			listEquipment.Remove(equipment);
+			Console.WriteLine("Item deleted successfully.");
+		}
+		else
+		{
+			Console.WriteLine("Failed to delete item. Please refresh the page.");
+		}
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		listEquipment = await Http.GetFromJsonAsync<List<Ppt.Shared.VybaveniVm>>("vybaveni");
+	}
 
 }

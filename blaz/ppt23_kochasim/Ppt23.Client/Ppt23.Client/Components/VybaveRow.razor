@@ -4,20 +4,20 @@
 
 @if (!Vyb.isEditable)
 {
-
     <div class="grid grid-cols-5 gap-4 p-2 px-1 py-1 @((Vyb.isRevisionNeeded) ? "bg-red-200" : "")">
         <div>@Vyb.Name</div>
         <div>@Vyb.BoughtDateTime</div>
         <div>@Vyb.LastRevisionDateTime</div>
-        <div class="p-2 text-center">@(
-        (Vyb.isRevisionNeeded) ? "Yes" : "No"
-        )</div>
-        <div class="flex justify-center">
-            <button class="twbtn bg-blue-400" @onclick="() => OnPerformRevision.InvokeAsync(Vyb)"> Provest revizi</button>
-            <button class="twbtn bg-red-400" @onclick="() => OnDelete.InvokeAsync(Vyb)">Smazat</button>
-            <button @onclick="() => Vyb.isEditable= true" class="bg-amber-500 twbtn">✏️</button>
+        <div class="p-2 text-center">
+            @(
+                (Vyb.isRevisionNeeded) ? "Yes" : "No"
+                )
         </div>
-
+        <div class="flex justify-center">
+         <button class="twbtn @(IsUserLoggedIn ? "bg-blue-400" : "bg-gray-400")" @onclick="() => OnPerformRevision.InvokeAsync(Vyb)" disabled="@(IsUserLoggedIn ? false : true)">Provest revizi</button>
+        <button class="twbtn @(IsUserLoggedIn ? "bg-red-400" : "bg-gray-400")" @onclick="() => OnDelete.InvokeAsync(Vyb)" disabled="@(IsUserLoggedIn ? false : true)">Smazat</button>
+        <button @onclick="() => Vyb.isEditable= true" class="bg-amber-500 twbtn" disabled="@(IsUserLoggedIn ? false : true)">✏️</button>
+ </div>
     </div>
 }
 else
@@ -30,16 +30,17 @@ else
             @((Vyb.isRevisionNeeded) ? "Yes" : "No")
         </div>
         <div class="flex justify-center">
-            <button @onclick="() => saveChanges(Vyb)" class="bg-amber-500 twbtn">Ok</button>
-            </div>
+            <button @onclick="() => saveChanges(Vyb)" class="bg-amber-500 twbtn" disabled="@(IsUserLoggedIn ? false : true)">Ok</button>
+
+        </div>
     </div>
 }
+
 @code {
     void saveChanges(VybaveniVm Equi)
     {
         Equi.isEditable = false;
         OnSaveChanges.InvokeAsync(Equi);
-
     }
 
     void EnableEditMode()
@@ -47,7 +48,6 @@ else
         IsInEditMode = true;
         equipment = new VybaveniVm(Vyb.Name, IsInEditMode, Vyb.BoughtDateTime, Vyb.LastRevisionDateTime)
             {
-
                 price = Vyb.price
             };
     }
@@ -58,4 +58,7 @@ else
     [Parameter] public EventCallback<VybaveniVm> OnDelete { get; set; }
     [Parameter] public EventCallback<VybaveniVm> OnPerformRevision { get; set; }
     [Parameter] public EventCallback<VybaveniVm> OnSaveChanges { get; set; }
+
+    // Add a new Parameter to accept the login status.
+    [Parameter] public bool IsUserLoggedIn { get; set; }
 }
