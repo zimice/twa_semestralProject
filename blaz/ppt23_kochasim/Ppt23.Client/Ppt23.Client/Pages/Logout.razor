@@ -1,0 +1,19 @@
+﻿@page "/logout"
+
+@inject SharedStateService StateService
+@inject NavigationManager NavigationManager
+
+<h2 class="text-3xl font-bold mb-4 text-center w-full">You have been loged out</h2>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        StateService.SetSharedVariable(false);
+
+        // Wait for a second
+        await Task.Delay(1000);
+
+        // Redirect to the main index page
+        NavigationManager.NavigateTo("/");
+    }
+}

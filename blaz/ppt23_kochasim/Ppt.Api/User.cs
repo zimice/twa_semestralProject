@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ppt.Api
 {
-    public class User
+    public class User : IEquatable<User>
     {
 
         public int UserID { get; set; }
@@ -17,6 +17,11 @@ namespace Ppt.Api
         [Required]
         public string Password { get; set; }
 
-        public DateTime CreatedAt { get; set; } 
+        public DateTime CreatedAt { get; set; }
+
+        public bool Equals(User? other)
+        {
+            return this.Username == other.Username && this.Password == other.Password;
+        }
     }
 }

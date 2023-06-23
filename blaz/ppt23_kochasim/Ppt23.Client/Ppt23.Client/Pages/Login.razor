@@ -2,13 +2,11 @@
 @using Ppt23.Client.Components
 @using Ppt.Shared
 
-
 @inject HttpClient Http
 @inject SharedStateService StateService
+@inject NavigationManager NavigationManager
 
 <h1 class="text-3xl font-bold mb-4 text-center w-full">Login</h1>
-
-
 
 <div class="flex flex-col space-y-4 p-4 max-w-md mx-auto">
 
@@ -26,94 +24,45 @@
         Log in
     </button>
 
+    @if (!string.IsNullOrEmpty(loginMessage))
+    {
+        <div class="mt-4 text-center" style="color:@messageColor">
+            @loginMessage
+        </div>
+    }
+
 </div>
 
 
 @code {
     string? username;
     string? password;
+    string loginMessage = "";
+    string messageColor = "green";
 
-
-
-    private async Task CreateEquipment(VybaveniVm newEquipment)
-    {
-        HttpResponseMessage response = await Http.PostAsJsonAsync($"vybaveni", newEquipment);
-
-        if (response.IsSuccessStatusCode)
-        {
-            VybaveniVm createdEquipment = await response.Content.ReadFromJsonAsync<VybaveniVm>();
-            if (createdEquipment != null)
-            {
-                newEquipment.Id = createdEquipment.Id;
-
-                Console.WriteLine("Item created successfully.");
-            }
-        }
-        else
-        {
-            Console.WriteLine("Failed to create item. Please refresh the page.");
-        }
-    }
     private async Task checkUserCredentials()
     {
-        User newUser = new User(username,password);
+        User newUser = new User(username, password);
         HttpResponseMessage response = await Http.PostAsJsonAsync($"login", newUser);
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("You are logged in");
-            }
-            else
-            {
-                Console.WriteLine("Bad credentials");
-            }
-    }
-
-    private async Task saveChanges(VybaveniVm equipment)
-    {
-        await UpdateEquipment(equipment);
-    }
-
-    private async Task performRevision(VybaveniVm equipment)
-
-    {
-        equipment.LastRevisionDateTime = DateTime.Now;
-        equipment.isRevisionNeeded = !equipment.isRevisionNeeded;
-
-        await UpdateEquipment(equipment);
-
-
-    }
-    private async Task UpdateEquipment(VybaveniVm updatedEquipment)
-    {
-        HttpResponseMessage response = await Http.PutAsJsonAsync($"vybaveni/{updatedEquipment.Id}", updatedEquipment);
-
         if (response.IsSuccessStatusCode)
         {
-            Console.WriteLine("Item updated successfully.");
+            StateService.SetSharedVariable(true);
+            loginMessage = "You have logged in successfully";
+            messageColor = "green";
+
+            // Force the UI to update with the success message
+            StateHasChanged();
+
+            // Wait for a second
+            await Task.Delay(1000);
+
+            // Redirect to the main index page
+            NavigationManager.NavigateTo("/");
         }
         else
         {
-            Console.WriteLine("Failed to update item. Please refresh the page.");
+            loginMessage = "Bad credentials";
+            messageColor = "red";
         }
     }
-    private async Task DeleteEquipment(VybaveniVm equipment)
-    {
-        HttpResponseMessage response = await Http.DeleteAsync($"vybaveni/{equipment.Id}");
-
-        if (response.IsSuccessStatusCode)
-        {
-
-            Console.WriteLine("Item deleted successfully.");
-        }
-        else
-        {
-            Console.WriteLine("Failed to delete item. Please refresh the page.");
-        }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-
-    }
-
 }
