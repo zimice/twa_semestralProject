@@ -1,17 +1,39 @@
 ﻿@page "/login"
 @using Ppt23.Client.Components
 @using Ppt.Shared
+
+
 @inject HttpClient Http
 @inject SharedStateService StateService
 
-<h1 class="text-3xl font-bold mb-4">Login</h1>
+<h1 class="text-3xl font-bold mb-4 text-center w-full">Login</h1>
 
+
+
+<div class="flex flex-col space-y-4 p-4 max-w-md mx-auto">
+
+    <div class="flex flex-col">
+        <label for="username" class="text-lg font-medium text-blue-700">Username:</label>
+        <input id="username" class="border-2 border-blue-700 mt-1 p-2 w-full" @bind-value="username" />
+    </div>
+
+    <div class="flex flex-col">
+        <label for="password" class="text-lg font-medium text-blue-700">Password:</label>
+        <input id="password" type="password" class="border-2 border-blue-700 mt-1 p-2 w-full" @bind-value="password" />
+    </div>
+
+    <button class="p-2 pl-5 pr-5 bg-blue-500 text-gray-100 text-lg rounded-lg focus:outline-none focus:border-4 border-blue-300 w-full" @onclick="checkUserCredentials">
+        Log in
+    </button>
+
+</div>
 
 
 @code {
-    bool isInNewMode;
-    VybaveniVm newVybav;
-    List<Ppt.Shared.VybaveniVm>? listEquipment = new List<Ppt.Shared.VybaveniVm>();
+    string? username;
+    string? password;
+
+
 
     private async Task CreateEquipment(VybaveniVm newEquipment)
     {
@@ -23,8 +45,7 @@
             if (createdEquipment != null)
             {
                 newEquipment.Id = createdEquipment.Id;
-                listEquipment.Insert(0, newEquipment);
-                isInNewMode = false;
+
                 Console.WriteLine("Item created successfully.");
             }
         }
@@ -33,7 +54,19 @@
             Console.WriteLine("Failed to create item. Please refresh the page.");
         }
     }
-
+    private async Task checkUserCredentials()
+    {
+        User newUser = new User(username,password);
+        HttpResponseMessage response = await Http.PostAsJsonAsync($"login", newUser);
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("You are logged in");
+            }
+            else
+            {
+                Console.WriteLine("Bad credentials");
+            }
+    }
 
     private async Task saveChanges(VybaveniVm equipment)
     {
@@ -69,7 +102,7 @@
 
         if (response.IsSuccessStatusCode)
         {
-            listEquipment.Remove(equipment);
+
             Console.WriteLine("Item deleted successfully.");
         }
         else
@@ -80,7 +113,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        listEquipment = await Http.GetFromJsonAsync<List<Ppt.Shared.VybaveniVm>>("vybaveni");
+
     }
 
 }
