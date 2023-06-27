@@ -17,6 +17,7 @@ namespace Ppt.Shared
         public DateTime BoughtDateTime { get; set; }
 
         public DateTime LastRevisionDateTime { get; set; }
+        public bool wasCreted { get; set; }
 
         public VybaveniVm(string Name, bool isRevisionNeeded, DateTime BoughtDateTime,DateTime LastRevisionDateTime) {
             this.Name = Name;

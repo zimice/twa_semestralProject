@@ -2,13 +2,13 @@
 @using Ppt23.Client.Components
 @using Ppt.Shared
 @inject HttpClient Http
-@inject SharedStateService StateService
+@inject Ppt23.SharedStateService SharedStateService
 
 <h1 class="text-3xl font-bold mb-4">Vybaveni Nemocnice</h1>
 
 <div class="container mx-auto bg-neutral-200 p-4 px-4 py-4">
 	<div class="text-lg font-semibold mb-2">Number of Equipment: @listEquipment?.Count</div>
-	<button class="bg-emerald-500 hover:bg-emerald-300 text-white font-bold py-2 px-4 rounded mb-3" @onclick="()=> {newVybav = VybaveniVm.VratRandSeznam(1).First();isInNewMode = true;}"> New Item</button>
+	<button class="twbtn text-white font-bold py-2 px-4 rounded mb-3 @(SharedStateService.SharedVariable ? "bg-emerald-500" : "bg-gray-400")" @onclick="()=> {addEquipment();}" disabled="@(SharedStateService.SharedVariable ? false : true)">New Item</button>
 
 	<div class=" bg-green-200 grid grid-cols-5 gap-2 py-1 px-2">
 		<div class="font-bold text-sm ml-2">Name</div>
@@ -23,7 +23,7 @@
 	{
 		ArgumentNullException.ThrowIfNull(newVybav);
 
-		<VybaveRow IsInEditMode=true Equi="newModel" EditDoneEventCallback="() => CreateEquipment(newModel)">
+		<VybaveRow IsInEditMode=true  EditDoneEventCallback="() => CreateEquipment(newModel)">
 			<button type="submit" class="btn bg-teal-500">Add</button>
 			<button type="button" @onclick="() => isInNewMode = false" class="btn bg-teal-700 ml-2">Cancel</button>
 		</VybaveRow>
@@ -34,7 +34,7 @@
 
 
 		<div class="col-span-5">
-			<VybaveRow Vyb="@equipment" OnDelete="() => DeleteEquipment(equipment)" OnPerformRevision="() => performRevision(equipment)" OnSaveChanges="() => saveChanges(equipment)" IsUserLoggedIn="@StateService.SharedVariable" />
+			<VybaveRow Vyb="@equipment" OnDelete="() => DeleteEquipment(equipment)" OnPerformRevision="() => performRevision(equipment)" OnSaveChanges="() => saveChanges(equipment)" IsUserLoggedIn="@SharedStateService.SharedVariable" />
 		</div>
 	}
 
@@ -42,10 +42,22 @@
 
 @code {
 	bool isInNewMode;
-	VybaveniVm newVybav;
+	VybaveniVm newVybav = new VybaveniVm("New vybaveni",false,DateTime.Now,DateTime.Now);
 	List<Ppt.Shared.VybaveniVm>? listEquipment = new List<Ppt.Shared.VybaveniVm>();
 
 
+	private async Task addEquipment()
+
+	{
+		newVybav.isEditable = true;
+		newVybav.wasCreted = true;
+
+
+			listEquipment.Add(newVybav);
+		
+
+
+	}
 
 	private async Task CreateEquipment(VybaveniVm newEquipment)
 	{
@@ -53,14 +65,8 @@
 
 		if (response.IsSuccessStatusCode)
 		{
-			VybaveniVm createdEquipment = await response.Content.ReadFromJsonAsync<VybaveniVm>();
-			if (createdEquipment != null)
-			{
-				newEquipment.Id = createdEquipment.Id;
-				listEquipment.Insert(0, newEquipment);
-				isInNewMode = false;
 				Console.WriteLine("Item created successfully.");
-			}
+		
 		}
 		else
 		{
@@ -71,7 +77,10 @@
 
 	private async Task saveChanges(VybaveniVm equipment)
 	{
-		await UpdateEquipment(equipment);
+		if (equipment.wasCreted)
+			await CreateEquipment(equipment);
+		else
+			await UpdateEquipment(equipment);
 	}
 
 	private async Task performRevision(VybaveniVm equipment)
@@ -115,6 +124,15 @@
 	protected override async Task OnInitializedAsync()
 	{
 		listEquipment = await Http.GetFromJsonAsync<List<Ppt.Shared.VybaveniVm>>("vybaveni");
+	}
+	protected override void OnInitialized()
+	{
+		SharedStateService.OnChange += StateHasChanged;
+	}
+
+	public void Dispose()
+	{
+		SharedStateService.OnChange -= StateHasChanged;
 	}
 
 }
